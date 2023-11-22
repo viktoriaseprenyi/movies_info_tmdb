@@ -1,8 +1,12 @@
+//React, Redux
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+//Style,animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
+//Actions
 import { fetchSearch } from "../actions/moviesAction";
-import { useDispatch } from "react-redux";
+
 
 const Nav = () => {
     const dispatch = useDispatch();

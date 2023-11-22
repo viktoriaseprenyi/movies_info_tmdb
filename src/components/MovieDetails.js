@@ -1,19 +1,19 @@
+//React,Redux
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-//Styling
+//Style, animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
-//Redux
-import { useSelector } from "react-redux";
 
 
-const MovieDetails = ({ pathId, image_base_URL, isDetailOpen, setIsDetailOpen }) => {
+
+const MovieDetails = ({ image_base_URL }) => {
     const navigate = useNavigate();
     const exitMovieDetail = (e) => {
         const element = e.target;
         if (element.classList.contains("shadow")) {
             document.body.style.overflow = 'auto';
-            setIsDetailOpen(false);
             navigate('/');
 
         }
@@ -25,7 +25,7 @@ const MovieDetails = ({ pathId, image_base_URL, isDetailOpen, setIsDetailOpen })
     const movieDurationHours = Math.floor(movie.runtime / 60);
     const movieDurationMinutes = movie.runtime % 60;
 
-    return (<>{!isLoading && isDetailOpen && (<CardShadow className="shadow" onClick={exitMovieDetail}>
+    return (<>{!isLoading && (<CardShadow className="shadow" onClick={exitMovieDetail}>
         <Details>
             <Info>
                 <div className="title">

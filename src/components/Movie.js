@@ -1,23 +1,30 @@
-import { motion } from "framer-motion";
+//React, Redux
 import React from "react";
-import styled from "styled-components";
-import loadDetails from "../actions/detailsAction";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+//Style, animation
+import { motion } from "framer-motion";
+import styled from "styled-components";
+//Action
+import loadDetails from "../actions/detailsAction";
 
-const Movie = ({ title, id, image, image_base_URL, isDetailOpen, setIsDetailOpen }) => {
+
+const Movie = ({ title, id, image, image_base_URL }) => {
     const stringPathId = id.toString();
     const dispatch = useDispatch();
 
     const openMovieDetail = () => {
         document.body.style.overflow = 'hidden';
         dispatch(loadDetails(stringPathId));
-        setIsDetailOpen(true);
+
     };
 
     return (
         <StyledMovie onClick={openMovieDetail}>
-            <h3>{title}</h3>
-            <img src={`${image_base_URL}${image}`} alt="movie_image"></img>
+            <Link to={`movie/${id}`} className="link">
+                <h3>{title}</h3>
+                <img src={`${image_base_URL}${image}`} alt="movie_image"></img>
+            </Link>
         </StyledMovie>
     )
 };

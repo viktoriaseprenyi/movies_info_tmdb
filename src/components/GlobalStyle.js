@@ -57,6 +57,11 @@ button:hover{
 a{
     text-decoration: none;
 }
+.link{
+    text-decoration: none;
+    color:white;
+}
+
 h1{
     font-family: "Vina Sans", sans-serif;
     font-size: 5rem;
