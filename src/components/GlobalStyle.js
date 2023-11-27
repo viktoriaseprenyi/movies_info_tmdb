@@ -60,6 +60,7 @@ a{
 .link{
     text-decoration: none;
     color:white;
+    pointer-events: none;
 }
 
 h1{
@@ -84,5 +85,6 @@ p{
     font-size: 1.2rem;
     
 }
+
 
 `;

@@ -3,6 +3,7 @@ const initialState = {
     topRatedMovie: [],
     upComingMovie: [],
     searched: [],
+    filtered: [],
 };
 
 const moviesReducer = (state = initialState, action) => {
@@ -18,6 +19,11 @@ const moviesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 searched: action.payload.searched,
+            };
+        case "FILTERED_MOVIE":
+            return {
+                ...state,
+                filtered: action.payload.filtered
             };
         case "CLEAR_SEARCH":
             return {

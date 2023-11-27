@@ -37,10 +37,13 @@ box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 backdrop-filter: blur(3.3px);
 -webkit-backdrop-filter: blur(3.3px);
 padding-top: 1rem;
-min-height: 30vh;
-cursor: pointer;
+flex: 0 0 45vh;
+margin-right: 1rem;
+display: flex;
+min-height: 35vh;
 overflow: hidden;
 img{
+    pointer-events: none;
     margin-top: 1rem;
     width: 100%;
     height: 100%;
@@ -48,6 +51,7 @@ img{
 }
 h3{
     padding-left: 1rem;
+    flex:1;
 }
 `;
 

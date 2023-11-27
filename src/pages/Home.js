@@ -1,5 +1,5 @@
 //React, redux
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 //Action
@@ -16,7 +16,7 @@ const Home = () => {
     //Location path
     const location = useLocation();
     const pathId = location.pathname.split("/")[2];
-    console.log(location.pathname)
+
     //For image URL
     const image_base_URL = "https://image.tmdb.org/t/p/original/";
 
@@ -26,6 +26,16 @@ const Home = () => {
     useEffect(() => {
         dispatch(loadMovies());
     }, [dispatch]);
+
+    //Carousel
+    const [width, setWidth] = useState(0);
+    const carousel = useRef();
+
+
+    useEffect(() => {
+        setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+        console.log(carousel.current.scrollWidth, carousel.current.offsetWidth)
+    }, []);
 
     const { nowPlayingMovie, topRatedMovie, upComingMovie, searched } = useSelector((state) => state.movies);
 
@@ -42,13 +52,16 @@ const Home = () => {
                             ))}
                     </Movies></div>) : ("")}
                 <h2>Now Playing</h2>
-                <Movies>
-                    {nowPlayingMovie
-                        .filter(movie => movie.adult === false)
-                        .map(movie => (
-                            <Movie image_base_URL={image_base_URL} title={movie.title} id={movie.id} key={movie.id} image={movie.backdrop_path}></Movie>
-                        ))}
-                </Movies>
+                <Carousel ref={carousel} whileTap={{ cursor: "grabbing" }}>
+                    <Movies drag="x"
+                        dragConstraints={{ left: 0, right: -width }} className="inner-carousel" >
+                        {nowPlayingMovie
+                            .filter(movie => movie.adult === false)
+                            .map(movie => (
+                                <Movie image_base_URL={image_base_URL} title={movie.title} id={movie.id} key={movie.id} image={movie.backdrop_path}></Movie>
+                            ))}
+                    </Movies>
+                </Carousel>
                 <h2>Top Rated</h2>
                 <Movies>
                     {topRatedMovie
@@ -79,14 +92,20 @@ const MovieList = styled(motion.div)`
     }
 `;
 
-
-const Movies = styled(motion.div)`
+/*const Movies = styled(motion.div)`
 min-height: 50vh;
 display: grid;
 grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 grid-column-gap: 3rem;
 grid-row-gap: 5rem;
+`;*/
 
+const Carousel = styled(motion.div)`
+overflow: hidden;
+cursor: grab;`
+
+const Movies = styled(motion.div)`
+display: flex;
 `;
 
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { nowPlayingMovieURL, topRatedMovieURL, upComingMovieURL, searchMovieURL } from "../api";
+import { nowPlayingMovieURL, topRatedMovieURL, upComingMovieURL, searchMovieURL, filterMovieURL } from "../api";
 
 export const loadMovies = () => async (dispatch) => {
     const nowPlayingMovieData = await axios.get(nowPlayingMovieURL());
@@ -25,6 +25,16 @@ export const fetchSearch = (movie_name) => async (dispatch) => {
     });
 
 };
+
+export const fetchFiltered = (movie_type_id) => async (dispatch) => {
+    const filteredMovieData = await axios.get(filterMovieURL(movie_type_id));
+    dispatch(
+        {
+            type: "FILTERED_MOVIE",
+            payload: { filtered: filteredMovieData.data.results },
+        }
+    )
+}
 
 
 
