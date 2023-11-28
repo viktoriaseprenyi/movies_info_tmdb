@@ -17,7 +17,11 @@ export const upComingMovieURL = () => `${base_url}${upComingMovie}`;
 export const searchMovieURL = (movie_name) => `${base_url}search/movie?query=${movie_name}&api_key=${process.env.REACT_APP_API_KEY}`;
 
 //FILTER BY TYPE URL
-export const filterMovieURL = (movie_type_id) => `${base_url}search/movie?api_key=${process.env.REACT_APP_API_KEY}&with_genres=${movie_type_id}`;
+export const filterMovieURL = (movie_type_id) => `${base_url}discover/movie?api_key=${process.env.REACT_APP_API_KEY}&with_genres=${movie_type_id}`;
+
+//MOVIE TYPE URL
+
+export const moiveTypeURL = () => `${base_url}genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}`;
 
 //DETAILS URL
 

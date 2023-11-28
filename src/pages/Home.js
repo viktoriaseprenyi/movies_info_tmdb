@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 //Action
 import { loadMovies } from "../actions/moviesAction";
+import { loadMovieType } from "../actions/movieTypeAction";
 //Style, animation
 import { motion } from "framer-motion";
 import styled from "styled-components";
 //Components
 import Movie from "../components/Movie";
 import MovieDetails from "../components/MovieDetails";
+import MovieType from "../components/MovieType";
 
 
 const Home = () => {
@@ -25,6 +27,7 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(loadMovies());
+        dispatch(loadMovieType());
     }, [dispatch]);
 
     //Carousel
@@ -37,12 +40,39 @@ const Home = () => {
         console.log(carousel.current.scrollWidth, carousel.current.offsetWidth)
     }, []);
 
-    const { nowPlayingMovie, topRatedMovie, upComingMovie, searched } = useSelector((state) => state.movies);
+    //Movies type state to h2
+    const [selectedMovieType, setSelectedMovieType] = useState('');
+
+    //Access to the store
+    const { nowPlayingMovie, topRatedMovie, upComingMovie, searched, filtered } = useSelector((state) => state.movies);
+    const { movieType } = useSelector((state) => state.genres)
+
 
     return (
         <>
             {pathId && <MovieDetails image_base_URL={image_base_URL} pathId={pathId} />}
             <MovieList>
+                <GenresContainer>
+                    {movieType.map(type => <MovieType setSelectedMovieType={setSelectedMovieType} key={type.id} id={type.id} name={type.name}></MovieType>)}
+                </GenresContainer>
+                {filtered.length ? (
+                    <div className="filtered">
+                        <h2>{selectedMovieType ? `${selectedMovieType} Movies` : "Filtered Movies"}</h2>
+                        <Movies>
+                            {filtered
+                                .filter(movie => movie.backdrop_path)
+                                .map(movie => (
+                                    <Movie
+                                        image_base_URL={image_base_URL}
+                                        title={movie.title}
+                                        id={movie.id}
+                                        key={movie.id}
+                                        image={movie.backdrop_path}
+                                    ></Movie>
+                                ))}
+                        </Movies>
+                    </div>
+                ) : ("")}
                 {searched.length ? (<div className="searched"><h2>Searched Movies</h2>
                     <Movies>
                         {searched
@@ -88,7 +118,7 @@ const Home = () => {
 const MovieList = styled(motion.div)`
   padding: 0rem 5rem;
     h2{
-        padding: 2rem 0rem;
+        padding: 1rem 0rem;
     }
 `;
 
@@ -106,6 +136,10 @@ cursor: grab;`
 
 const Movies = styled(motion.div)`
 display: flex;
+`;
+
+const GenresContainer = styled(motion.div)`
+margin-top: 2.5rem;
 `;
 
 

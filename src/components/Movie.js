@@ -14,6 +14,7 @@ const Movie = ({ title, id, image, image_base_URL }) => {
     const dispatch = useDispatch();
 
     const openMovieDetail = () => {
+        console.log("Opening movie details...")
         document.body.style.overflow = 'hidden';
         dispatch(loadDetails(stringPathId));
 
@@ -43,7 +44,6 @@ display: flex;
 min-height: 35vh;
 overflow: hidden;
 img{
-    pointer-events: none;
     margin-top: 1rem;
     width: 100%;
     height: 100%;

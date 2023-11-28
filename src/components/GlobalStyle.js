@@ -27,9 +27,6 @@ html{
 &::-webkit-scrollbar-track{
     background: linear-gradient(0deg, #0f021d 0%, #15151b 100%);
 }
-&::-webkit-scrollbar-horizontal {
-        display: none;
-    }
 }
 
 img{
@@ -47,6 +44,7 @@ button{
     text-transform: uppercase;
     letter-spacing: 0.2rem;
     font-weight: bolder;
+    border:none;
 }
 
 button:hover{
@@ -60,7 +58,6 @@ a{
 .link{
     text-decoration: none;
     color:white;
-    pointer-events: none;
 }
 
 h1{
