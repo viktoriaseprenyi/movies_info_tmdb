@@ -40,7 +40,7 @@ backdrop-filter: blur(3.3px);
 padding-top: 1rem;
 flex: 0 0 45vh;
 margin-right: 1rem;
-display: flex;
+display: inline-flex;
 min-height: 35vh;
 overflow: hidden;
 img{
@@ -52,6 +52,10 @@ img{
 h3{
     padding-left: 1rem;
     flex:1;
+}
+
+&:last-of-type {
+    margin-right: 0;
 }
 `;
 
