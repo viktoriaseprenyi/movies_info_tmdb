@@ -31,14 +31,8 @@ const Home = () => {
     }, [dispatch]);
 
     //Carousel
-    const [width, setWidth] = useState(0);
-    const carousel = useRef();
-
-
-    useEffect(() => {
-        setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-        console.log(carousel.current.scrollWidth, carousel.current.offsetWidth)
-    }, []);
+    const carouselRef = useRef();
+    const moviesRef = useRef();
 
     //Movies type state to h2
     const [selectedMovieType, setSelectedMovieType] = useState('');
@@ -82,9 +76,8 @@ const Home = () => {
                             ))}
                     </Movies></div>) : ("")}
                 <h2>Now Playing</h2>
-                <Carousel ref={carousel} whileTap={{ cursor: "grabbing" }}>
-                    <Movies drag="x"
-                        dragConstraints={{ left: 0, right: -width }} className="inner-carousel" >
+                <Carousel whileTap={{ cursor: "grabbing" }} ref={carouselRef}>
+                    <Movies drag="x" dragConstraints={{left: -(moviesRef.current?.offsetWidth - carouselRef.current?.offsetWidth), right: 0}} ref={moviesRef}>
                         {nowPlayingMovie
                             .filter(movie => movie.adult === false)
                             .map(movie => (
@@ -131,11 +124,12 @@ grid-row-gap: 5rem;
 `;*/
 
 const Carousel = styled(motion.div)`
-overflow: hidden;
-cursor: grab;`
+    overflow: hidden;
+    cursor: grab;
+`
 
 const Movies = styled(motion.div)`
-display: flex;
+    width: max-content;
 `;
 
 const GenresContainer = styled(motion.div)`
