@@ -13,7 +13,7 @@ body{
     color: white;
     font-family: "Lato", sans-serif;
     letter-spacing: 0.3rem;
-    padding-bottom: 1.5rem;
+    overflow-x: hidden;
 }
 
 html{
@@ -27,10 +27,6 @@ html{
 &::-webkit-scrollbar-track{
     background: linear-gradient(0deg, #0f021d 0%, #15151b 100%);
 }
-}
-
-img{
-    display: block;
 }
 
 input{
@@ -52,9 +48,6 @@ button:hover{
     background-color:#292936;
 }
 
-a{
-    text-decoration: none;
-}
 .link{
     text-decoration: none;
     color:white;
@@ -80,8 +73,10 @@ h3{
 
 p{
     font-size: 1.2rem;
-    
 }
 
+.swiper-wrapper {
+    gap: 2rem;
+}
 
 `;

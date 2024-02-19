@@ -1,5 +1,5 @@
 //React, redux
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 //Action
@@ -8,6 +8,10 @@ import { loadMovieType } from "../actions/movieTypeAction";
 //Style, animation
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import {FreeMode} from "swiper/modules";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/free-mode';
 //Components
 import Movie from "../components/Movie";
 import MovieDetails from "../components/MovieDetails";
@@ -20,7 +24,7 @@ const Home = () => {
     const pathId = location.pathname.split("/")[2];
 
     //For image URL
-    const image_base_URL = "https://image.tmdb.org/t/p/original/";
+    const image_base_URL = "https://image.tmdb.org/t/p/w500/";
 
     //Fecth movies
     const dispatch = useDispatch();
@@ -29,16 +33,6 @@ const Home = () => {
         dispatch(loadMovies());
         dispatch(loadMovieType());
     }, [dispatch]);
-
-    //Carousel
-    const [width, setWidth] = useState(0);
-    const carousel = useRef();
-
-
-    useEffect(() => {
-        setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-        console.log(carousel.current.scrollWidth, carousel.current.offsetWidth)
-    }, []);
 
     //Movies type state to h2
     const [selectedMovieType, setSelectedMovieType] = useState('');
@@ -58,10 +52,22 @@ const Home = () => {
                 {filtered.length ? (
                     <div className="filtered">
                         <h2>{selectedMovieType ? `${selectedMovieType} Movies` : "Filtered Movies"}</h2>
-                        <Movies>
+                        <Carousel>
+                    <Swiper slidesPerView="auto"
+          spaceBetween={2}
+          freeMode={true}
+          centeredSlides
+          centeredSlidesBounds
+          modules={[FreeMode]}
+          style={{ height: 'auto'}}
+          >
+
                             {filtered
                                 .filter(movie => movie.backdrop_path)
                                 .map(movie => (
+                                    <SwiperSlide key={movie.id}
+                                    style={{ width: 'auto', height: 'auto'}}
+                                    className="shadow-lg animate-slideright">
                                     <Movie
                                         image_base_URL={image_base_URL}
                                         title={movie.title}
@@ -69,54 +75,101 @@ const Home = () => {
                                         key={movie.id}
                                         image={movie.backdrop_path}
                                     ></Movie>
+                                    </SwiperSlide>
                                 ))}
-                        </Movies>
+</Swiper>
+</Carousel>
                     </div>
                 ) : ("")}
                 {searched.length ? (<div className="searched"><h2>Searched Movies</h2>
-                    <Movies>
+                <Carousel>
+                    <Swiper slidesPerView="auto"
+          spaceBetween={2}
+          freeMode={true}
+          centeredSlides
+          centeredSlidesBounds
+          modules={[FreeMode]}
+          className="mt-4">
+
                         {searched
                             .filter(movie => movie.backdrop_path)
                             .map(movie => (
+                                <SwiperSlide key={movie.id}
+                                style={{ width: 'auto', height: 'auto' }}
+                                className="shadow-lg animate-slideright">
                                 <Movie image_base_URL={image_base_URL} title={movie.title} id={movie.id} key={movie.id} image={movie.backdrop_path}></Movie>
+                                </SwiperSlide>
                             ))}
-                    </Movies></div>) : ("")}
+                            </Swiper>
+</Carousel>
+</div>) : ("")}
                 <h2>Now Playing</h2>
-                <Carousel ref={carousel} whileTap={{ cursor: "grabbing" }}>
-                    <Movies drag="x"
-                        dragConstraints={{ left: 0, right: -width }} className="inner-carousel" >
+                <Carousel>
+                    <Swiper slidesPerView="auto"
+          spaceBetween={2}
+          freeMode={true}
+          centeredSlides
+          centeredSlidesBounds
+          modules={[FreeMode]}
+          className="mt-4">
                         {nowPlayingMovie
                             .filter(movie => movie.adult === false)
                             .map(movie => (
-                                <Movie image_base_URL={image_base_URL} title={movie.title} id={movie.id} key={movie.id} image={movie.backdrop_path}></Movie>
+                                <SwiperSlide key={movie.id}
+                                style={{ width: 'auto', height: 'auto' }}
+                                className="shadow-lg animate-slideright">
+                                <Movie image_base_URL={image_base_URL} title={movie.title} id={movie.id} key={movie.id} image={movie.backdrop_path}/>
+                                </SwiperSlide>
                             ))}
-                    </Movies>
+                            
+                    </Swiper>
                 </Carousel>
                 <h2>Top Rated</h2>
-                <Movies>
+                <Carousel>
+                    <Swiper slidesPerView="auto"
+          spaceBetween={2}
+          freeMode={true}
+          centeredSlides
+          centeredSlidesBounds
+          modules={[FreeMode]}
+          className="mt-4">
                     {topRatedMovie
                         .filter(movie => movie.adult === false)
                         .map(movie => (
-                            <Movie image_base_URL={image_base_URL} title={movie.title} id={movie.id} key={movie.id} image={movie.backdrop_path}></Movie>
-                        ))}
-
-                </Movies>
+                            <SwiperSlide key={movie.id}
+                                style={{ width: 'auto', height: 'auto' }}
+                                className="shadow-lg animate-slideright">
+                            <Movie image_base_URL={image_base_URL} title={movie.title} id={movie.id} key={movie.id} image={movie.backdrop_path}/>                         </SwiperSlide>
+                            ))}
+                    </Swiper>
+                </Carousel>
                 <h2>Upcoming Movies</h2>
-                <Movies>
+                 <Carousel>
+                    <Swiper slidesPerView="auto"
+          spaceBetween={2}
+          freeMode={true}
+          centeredSlides
+          centeredSlidesBounds
+          modules={[FreeMode]}
+          className="mt-4">
                     {upComingMovie
                         .filter(movie => movie.adult === false)
                         .map(movie => (
-                            <Movie image_base_URL={image_base_URL} title={movie.title} id={movie.id} key={movie.id} image={movie.backdrop_path}></Movie>
-                        ))}
-
-                </Movies>
+                            <SwiperSlide key={movie.id}
+                                style={{ width: 'auto', height: 'auto' }}
+                                className="shadow-lg animate-slideright">
+                            <Movie image_base_URL={image_base_URL} title={movie.title} id={movie.id} key={movie.id} image={movie.backdrop_path}/>
+                         </SwiperSlide>
+                            ))}
+                    </Swiper>
+                </Carousel>
             </MovieList>
         </>
     )
 };
 
 const MovieList = styled(motion.div)`
-  padding: 0rem 5rem;
+  padding: 0rem 0rem 0rem 5rem;
     h2{
         padding: 1rem 0rem;
     }
@@ -131,12 +184,11 @@ grid-row-gap: 5rem;
 `;*/
 
 const Carousel = styled(motion.div)`
-overflow: hidden;
-cursor: grab;`
-
-const Movies = styled(motion.div)`
-display: flex;
-`;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+`
 
 const GenresContainer = styled(motion.div)`
 margin-top: 2.5rem;

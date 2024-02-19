@@ -38,10 +38,8 @@ box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 backdrop-filter: blur(3.3px);
 -webkit-backdrop-filter: blur(3.3px);
 padding-top: 1rem;
-flex: 0 0 45vh;
-margin-right: 1rem;
-display: flex;
-min-height: 35vh;
+display: inline-flex;
+max-height: 35vh;
 overflow: hidden;
 img{
     margin-top: 1rem;
@@ -52,6 +50,10 @@ img{
 h3{
     padding-left: 1rem;
     flex:1;
+}
+
+&:last-of-type {
+    margin-right: 0;
 }
 `;
 
